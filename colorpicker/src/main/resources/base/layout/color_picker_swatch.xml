@@ -9,11 +9,4 @@
         ohos:height="match_parent"
         ohos:width="match_parent"/>
 
-<!--   <Image-->
-<!--        ohos:id="$+id:color_picker_checkmark"-->
-<!--        ohos:height="match_parent"-->
-<!--        ohos:width="match_parent"-->
-<!--        ohos:visibility="visible"-->
-<!--        ohos:image_src="$media:aa"-->
-<!--        ohos:scale_mode="stretch"/>-->
 </DirectionalLayout>

@@ -1,4 +1,4 @@
-package com.example.colorpicker;
+package com.fourmob.colorpicker;
 
 import ohos.agp.components.AttrSet;
 import ohos.agp.components.Component;
@@ -11,7 +11,7 @@ import ohos.app.Context;
 import ohos.global.resource.NotExistException;
 import ohos.global.resource.ResourceManager;
 import ohos.global.resource.WrongTypeException;
-import com.example.colorpicker.util.LogUtil;
+import com.fourmob.colorpicker.util.LogUtil;
 import java.io.IOException;
 
 /**
@@ -132,13 +132,15 @@ public class ColorPickerPalette extends TableLayout {
     /**
      * initialize the palette.
      *
+     * @param context context
      * @param size 1 for large and 2 for small size.
      * @param numColumns number of columns in the palette.
      * @param onColorSelectedListener listener when a color is selected.
      */
-    public void init(int size, int numColumns, ColorPickerSwatch.OnColorSelectedListener onColorSelectedListener) {
+    public void init(Context context, int size, int numColumns,
+                     ColorPickerSwatch.OnColorSelectedListener onColorSelectedListener) {
         this.mNumColumns = numColumns;
-        ResourceManager resources = getResourceManager();
+        ResourceManager resources = context.getResourceManager();
         try {
             if (size == 1) {
                 this.mSwatchLength = resources.getElement(ResourceTable.Float_color_swatch_large).getInteger();

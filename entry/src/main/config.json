@@ -1,7 +1,7 @@
 {
   "app": {
-    "bundleName": "com.example.colorpicker",
-    "vendor": "example",
+    "bundleName": "com.fourmob.colorpicker",
+    "vendor": "fourmob",
     "version": {
       "code": 1000000,
       "name": "1.0.0"
@@ -14,10 +14,10 @@
   },
   "deviceConfig": {},
   "module": {
-    "package": "com.example.colorpicker",
+    "package": "com.fourmob.colorpicker",
     "name": ".MyApplication",
     "deviceType": [
-      "phone", "tablet"
+      "phone"
     ],
     "distro": {
       "deliveryWithInstall": true,
@@ -37,7 +37,7 @@
           }
         ],
         "orientation": "unspecified",
-        "name": "com.example.colorpicker.MainAbility",
+        "name": "com.fourmob.colorpicker.MainAbility",
         "icon": "$media:icon",
         "description": "$string:mainability_description",
         "label": "$string:app_name",

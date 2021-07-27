@@ -1,4 +1,4 @@
-package com.example.colorpicker;
+package com.fourmob.colorpicker;
 
 import ohos.agp.components.Component;
 import ohos.agp.components.DirectionalLayout;
@@ -10,7 +10,7 @@ import ohos.agp.window.dialog.CommonDialog;
 import ohos.app.Context;
 import ohos.global.resource.NotExistException;
 import ohos.global.resource.WrongTypeException;
-import com.example.colorpicker.util.LogUtil;
+import com.fourmob.colorpicker.util.LogUtil;
 import java.io.IOException;
 
 /**
@@ -82,7 +82,7 @@ public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch
         this.mProgress = ((ProgressBar) component.findComponentById(ResourceTable.Id_progress));
         this.mPalette = ((ColorPickerPalette) component.findComponentById(ResourceTable.Id_color_picker));
         try {
-            this.mPalette.init(this.mSize, this.mColumns, this);
+            this.mPalette.init(mContext, this.mSize, this.mColumns, this);
             title.setText(mContext.getResourceManager().getElement(mTitleResId).getString());
             setTitleCustomComponent(titleComponent);
         } catch (NotExistException | WrongTypeException | IOException e) {

@@ -1,4 +1,4 @@
-package com.example.colorpicker;
+package com.fourmob.colorpicker;
 
 import static ohos.multimodalinput.event.TouchEvent.POINT_MOVE;
 import static ohos.multimodalinput.event.TouchEvent.PRIMARY_POINT_DOWN;
@@ -47,7 +47,7 @@ public class ColorPickerSwatch extends StackLayout implements Component.ClickedL
         }
     }
 
-    protected void setColor(Color color, boolean checked) {
+    private void setColor(Color color, boolean checked) {
         ShapeElement drawables = new ShapeElement();
         drawables.setShape(ShapeElement.OVAL);
         this.mSwatchImage.setTouchEventListener((component, touchEvent) -> {
@@ -75,7 +75,7 @@ public class ColorPickerSwatch extends StackLayout implements Component.ClickedL
 
     private void setChecked(ShapeElement drawables, boolean checked) {
         if (checked) {
-            this.mSwatchImage.setPixelMap(ResourceTable.Media_check2);
+            this.mSwatchImage.setPixelMap(ResourceTable.Media_ic_colorpicker_swatch_selected);
             this.mSwatchImage.setBackground(drawables);
         } else {
             this.mSwatchImage.setImageElement(drawables);

@@ -1,9 +1,12 @@
-package com.example.colorpicker;
+package com.fourmob.colorpicker;
 
-import com.example.colorpicker.slice.MainAbilitySlice;
 import ohos.aafwk.ability.Ability;
 import ohos.aafwk.content.Intent;
+import com.fourmob.colorpicker.slice.MainAbilitySlice;
 
+/**
+ * Main Ability.
+ */
 public class MainAbility extends Ability {
     @Override
     public void onStart(Intent intent) {

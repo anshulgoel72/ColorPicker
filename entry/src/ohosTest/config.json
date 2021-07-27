@@ -1,7 +1,7 @@
 {
   "app": {
-    "bundleName": "com.example.colorpicker",
-    "vendor": "example",
+    "bundleName": "com.fourmob.colorpicker",
+    "vendor": "fourmob",
     "version": {
       "code": 1000000,
       "name": "1.0.0"
@@ -14,7 +14,7 @@
   },
   "deviceConfig": {},
   "module": {
-    "package": "com.example.colorpicker",
+    "package": "com.fourmob.colorpicker",
     "name": "testModule",
     "deviceType": [
       "phone"
