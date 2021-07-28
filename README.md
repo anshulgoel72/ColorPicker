@@ -25,11 +25,11 @@ dependencies {
 ```
 
 # Usage
-The usage of this library is very simple. In the main ability slice, we just have to create an object of `ColorPickerDialog`. Then we have to initialize it by passing colors(that we want to have in our palette), the selected color, number of columns of the palette and the size of the swatch (SMALL_SWATCH for small size and LARGE_SWATCH for large size)
+The usage of this library is very simple. In the main ability slice, Create an object of `ColorPickerDialog`. Then initialize it by passing colors(that will be displayed on the palette), the selected color, number of columns of the palette and the size of the swatch (SMALL_SWATCH for small size and LARGE_SWATCH for large size)
 
-Then we have to set the listener `setOnColorSelectedListener` which will display a toast message whenever a color swatch is selected from the palette.
+Then, set the listener `setOnColorSelectedListener` which will display a toast message whenever a color swatch is selected from the palette.
 
-Finally we have to set the listener for the button on the homepage of our app that will display us the color picker dialog. 
+Finally, set the listener for the button on the homepage of the app that will display the color picker dialog. 
 
 ```java
 @Override
