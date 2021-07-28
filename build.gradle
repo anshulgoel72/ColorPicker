@@ -61,7 +61,7 @@ sonarqube {
     properties {
         property "sonar.projectKey", "applibgroup_colorpicker"
         property "sonar.organization", "applibgroup"
-        property "sonar.host.url", "http://localhost:9000/"
+        property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.sources", "entry,colorpicker"
         property "sonar.java.binaries", "entry/build,colorpicker/build"
         property "sonar.java.checkstyle.reportPaths", "build/reports/checkstyle/checkstyle.xml"

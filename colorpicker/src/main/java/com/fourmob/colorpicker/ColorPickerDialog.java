@@ -1,31 +1,34 @@
 package com.fourmob.colorpicker;
 
+import ohos.agp.colors.RgbColor;
 import ohos.agp.components.Component;
 import ohos.agp.components.DirectionalLayout;
 import ohos.agp.components.LayoutScatter;
 import ohos.agp.components.ProgressBar;
 import ohos.agp.components.Text;
-import ohos.agp.utils.Color;
 import ohos.agp.window.dialog.CommonDialog;
 import ohos.app.Context;
 import ohos.global.resource.NotExistException;
 import ohos.global.resource.WrongTypeException;
 import com.fourmob.colorpicker.util.LogUtil;
+import com.fourmob.colorpicker.util.PreferencesHelper;
 import java.io.IOException;
 
 /**
  * Class for creating a Color Picker Dialog.
  */
 public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch.OnColorSelectedListener {
-    protected Color[] mColors = null;
+    protected RgbColor[] mColors = null;
     protected int mColumns;
     protected ColorPickerSwatch.OnColorSelectedListener mListener;
     private ColorPickerPalette mPalette;
     private ProgressBar mProgress;
-    protected Color mSelectedColor;
+    protected RgbColor mSelectedColor;
     protected int mSize;
+    private PreferencesHelper preferencesHelper;
     private final Context mContext;
     protected int mTitleResId = ResourceTable.String_color_picker_default_title;
+    private static final String KEY_VALUE = "selectedColorValue";
 
     public ColorPickerDialog(Context context) {
         super(context);
@@ -47,13 +50,15 @@ public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch
      * @param columns number of columns in our palette.
      * @param size takes two values: 1 for large and 2 for small size.
      */
-    public void initialize(int titleId, Color[] colors, Color selectedColor, int columns, int size) {
+    public void initialize(int titleId, RgbColor[] colors, RgbColor selectedColor, int columns, int size) {
         this.mTitleResId = titleId;
         this.mColors = colors;
         this.mColumns = columns;
         this.mSelectedColor = selectedColor;
         this.mSize = size;
         setColors(colors, selectedColor);
+        preferencesHelper = PreferencesHelper.getInstance();
+        preferencesHelper.init(mContext, "SelectedColorData", mSelectedColor);
     }
 
     /**
@@ -61,15 +66,16 @@ public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch
      *
      * @param selectedColor selected color.
      */
-    public void onColorSelected(Color selectedColor) {
+    public void onColorSelected(RgbColor selectedColor) {
         if (this.mListener != null) {
             this.mListener.onColorSelected(selectedColor);
         }
         if (selectedColor != this.mSelectedColor) {
             this.mSelectedColor = selectedColor;
+            preferencesHelper.putInt(KEY_VALUE, mSelectedColor.asArgbInt());
             this.mPalette.drawPalette(this.mColors, this.mSelectedColor);
         }
-        hide();
+        destroy();
     }
 
     @Override
@@ -81,6 +87,8 @@ public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch
         Text title = (Text) titleComponent.findComponentById(ResourceTable.Id_dialog_title);
         this.mProgress = ((ProgressBar) component.findComponentById(ResourceTable.Id_progress));
         this.mPalette = ((ColorPickerPalette) component.findComponentById(ResourceTable.Id_color_picker));
+        int colorValue = preferencesHelper.getInt(KEY_VALUE);
+        this.mSelectedColor = RgbColor.fromArgbInt(colorValue);
         try {
             this.mPalette.init(mContext, this.mSize, this.mColumns, this);
             title.setText(mContext.getResourceManager().getElement(mTitleResId).getString());
@@ -96,12 +104,12 @@ public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch
     }
 
     /**
-     * to set the colors of the palette.
+     * set the colors of the palette.
      *
      * @param colors list of colors to be displayed in the palette.
      * @param selected selected color.
      */
-    public void setColors(Color[] colors, Color selected) {
+    public void setColors(RgbColor[] colors, RgbColor selected) {
         if ((this.mColors != colors) || (this.mSelectedColor != selected)) {
             this.mColors = colors;
             this.mSelectedColor = selected;
@@ -114,7 +122,7 @@ public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch
     }
 
     /**
-     * to show the palette in dialog.
+     * show the palette in dialog.
      */
     public void showPaletteView() {
         if ((this.mProgress != null) && (this.mPalette != null)) {
@@ -125,7 +133,7 @@ public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch
     }
 
     /**
-     * To show the progress bar.
+     * show the progress bar.
      */
     public void showProgressBarView() {
         if ((this.mProgress != null) && (this.mPalette != null)) {
@@ -133,4 +141,5 @@ public class ColorPickerDialog extends CommonDialog implements ColorPickerSwatch
             this.mPalette.setVisibility(Component.HIDE);
         }
     }
+
 }

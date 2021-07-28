@@ -1,12 +1,12 @@
 package com.fourmob.colorpicker;
 
+import ohos.agp.colors.RgbColor;
 import ohos.agp.components.AttrSet;
 import ohos.agp.components.Component;
 import ohos.agp.components.ComponentContainer;
 import ohos.agp.components.DirectionalLayout;
 import ohos.agp.components.Image;
 import ohos.agp.components.TableLayout;
-import ohos.agp.utils.Color;
 import ohos.app.Context;
 import ohos.global.resource.NotExistException;
 import ohos.global.resource.ResourceManager;
@@ -24,6 +24,8 @@ public class ColorPickerPalette extends TableLayout {
     private int mNumColumns;
     private ColorPickerSwatch.OnColorSelectedListener mOnColorSelectedListener;
     private int mSwatchLength;
+    public static final int LARGE_SWATCH = 1;
+    public static final int SMALL_SWATCH = 2;
 
     public ColorPickerPalette(Context context) {
         super(context);
@@ -50,9 +52,9 @@ public class ColorPickerPalette extends TableLayout {
         return imageView;
     }
 
-    private ColorPickerSwatch createColorSwatch(Color color, Color selectedColor) {
+    private ColorPickerSwatch createColorSwatch(RgbColor color, RgbColor selectedColor) {
         ColorPickerSwatch colorPickerSwatch = new ColorPickerSwatch(getContext(),
-                color, color == selectedColor, this.mOnColorSelectedListener);
+                color, color.asArgbInt() == selectedColor.asArgbInt(), this.mOnColorSelectedListener);
         DirectionalLayout.LayoutConfig layoutParams = new DirectionalLayout
                 .LayoutConfig(this.mSwatchLength, this.mSwatchLength);
         layoutParams.setMargins(this.mMarginSize, this.mMarginSize, this.mMarginSize, this.mMarginSize);
@@ -89,12 +91,12 @@ public class ColorPickerPalette extends TableLayout {
     }
 
     /**
-     * To draw the palette.
+     * draw the palette.
      *
      * @param colors list of colors to be drawn on palette.
      * @param selectedColor selected color.
      */
-    public void drawPalette(Color[] colors, Color selectedColor) {
+    public void drawPalette(RgbColor[] colors, RgbColor selectedColor) {
         if (colors == null) {
             return;
         }
@@ -104,7 +106,7 @@ public class ColorPickerPalette extends TableLayout {
         int rowNumber = 0;
         // Fills the table with swatches based on the array of colors.
         DirectionalLayout row = createTableRow();
-        for (Color color : colors) {
+        for (RgbColor color : colors) {
             tableElements++;
             Component colorSwatch = createColorSwatch(color, selectedColor);
             setSwatchDescription(rowNumber, tableElements, rowElements, color == selectedColor,
@@ -142,7 +144,7 @@ public class ColorPickerPalette extends TableLayout {
         this.mNumColumns = numColumns;
         ResourceManager resources = context.getResourceManager();
         try {
-            if (size == 1) {
+            if (size == LARGE_SWATCH) {
                 this.mSwatchLength = resources.getElement(ResourceTable.Float_color_swatch_large).getInteger();
                 this.mMarginSize = resources.getElement(ResourceTable.Float_color_swatch_margins_large).getInteger();
             } else {

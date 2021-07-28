@@ -9,14 +9,13 @@ import ohos.agp.components.Image;
 import ohos.agp.components.LayoutScatter;
 import ohos.agp.components.StackLayout;
 import ohos.agp.components.element.ShapeElement;
-import ohos.agp.utils.Color;
 import ohos.app.Context;
 
 /**
  * class for creating a color picker swatch.
  */
 public class ColorPickerSwatch extends StackLayout implements Component.ClickedListener {
-    private final Color mColor;
+    private final RgbColor mColor;
     private final OnColorSelectedListener mOnColorSelectedListener;
     private final Image mSwatchImage;
 
@@ -28,7 +27,7 @@ public class ColorPickerSwatch extends StackLayout implements Component.ClickedL
      * @param checked true if the current color is checked, otherwise false.
      * @param onColorSelectedListener listener for the selected color.
      */
-    public ColorPickerSwatch(Context paramContext, Color color, boolean checked,
+    public ColorPickerSwatch(Context paramContext, RgbColor color, boolean checked,
                              OnColorSelectedListener onColorSelectedListener) {
         super(paramContext);
         this.mColor = color;
@@ -47,7 +46,7 @@ public class ColorPickerSwatch extends StackLayout implements Component.ClickedL
         }
     }
 
-    private void setColor(Color color, boolean checked) {
+    private void setColor(RgbColor color, boolean checked) {
         ShapeElement drawables = new ShapeElement();
         drawables.setShape(ShapeElement.OVAL);
         this.mSwatchImage.setTouchEventListener((component, touchEvent) -> {
@@ -57,19 +56,19 @@ public class ColorPickerSwatch extends StackLayout implements Component.ClickedL
                 drawables.setRgbColor(RgbColor.fromArgbInt(resColor));
                 setChecked(drawables, checked);
             } else {
-                drawables.setRgbColor(RgbColor.fromArgbInt(color.getValue()));
+                drawables.setRgbColor(color);
                 setChecked(drawables, checked);
             }
             return currentAction == PRIMARY_POINT_DOWN || currentAction == POINT_MOVE;
         });
-        drawables.setRgbColor(RgbColor.fromArgbInt(color.getValue()));
+        drawables.setRgbColor(color);
         setChecked(drawables, checked);
     }
 
-    private int getPressedColor(Color color) {
-        HsvColor hsvColor = HsvColor.toHSV(color.getValue());
+    private int getPressedColor(RgbColor color) {
+        HsvColor hsvColor = HsvColor.toHSV(color.asArgbInt());
         float value = hsvColor.getValue();
-        value *= 0.7;
+        value = 0.7f * value;
         return HsvColor.toColor(hsvColor.getAlpha(), hsvColor.getHue(), hsvColor.getSaturation(), value);
     }
 
@@ -86,6 +85,6 @@ public class ColorPickerSwatch extends StackLayout implements Component.ClickedL
      * listener for selected color.
      */
     public abstract static interface OnColorSelectedListener {
-        public abstract void onColorSelected(Color color);
+        public abstract void onColorSelected(RgbColor color);
     }
 }
