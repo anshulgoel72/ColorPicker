@@ -1,6 +1,8 @@
 # ColorPicker
 HarmonyOS library that allow us to pick a color from a palette.
 
+![ColorPicker_Sample](https://user-images.githubusercontent.com/77639268/127439758-fcbf330c-c1f8-44e5-a7c5-5b7d47b0e2c9.gif)
+
 # Source
 This library is inspired by [ColorPicker](https://github.com/flavienlaurent/colorpicker) library.
 
